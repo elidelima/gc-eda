@@ -31,6 +31,9 @@ func (s *WebServer) Start() {
 	for path, handler := range s.Handlers {
 		s.Router.Post(path, handler)
 	}
-	fmt.Printf("Listening on port %s", s.WebServerPort)
-	http.ListenAndServe(s.WebServerPort, s.Router)
+
+	err := http.ListenAndServe(s.WebServerPort, s.Router)
+	if err != nil {
+		fmt.Printf("%v", err)
+	}
 }
