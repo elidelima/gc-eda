@@ -2,28 +2,28 @@ POST http://localhost:8080/clients HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Jose Ninguém",
-  "email": "jn@email.com"
+  "name": "<change name>",
+  "email": "<change email>"
 }
 
-###
+### - CREATE ACCOUNT
 
 POST http://localhost:8080/accounts HTTP/1.1
 Content-Type: application/json
 
 {
-  "client_id": "40eeb499-c2c7-4054-9975-a0be40fdccb5"
+  "client_id": "<add_client_id>"
 }
 
 
-###
+### TRANSACTIONS
 
 
 POST http://localhost:8080/transactions HTTP/1.1
 Content-Type: application/json
 
 {
-  "account_id_from": "b06936c1-89d4-49dc-a480-c7381e25b582",
-  "account_id_to": "2161e2cf-27ba-46f2-aab7-950c00dacabf",
-  "amount": 25
+  "account_id_from": "2161e2cf-27ba-46f2-aab7-950c00dacabf",
+  "account_id_to": "b06936c1-89d4-49dc-a480-c7381e25b582",
+  "amount": 120
 }

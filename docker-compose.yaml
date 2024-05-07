@@ -4,21 +4,40 @@ services:
   goapp:
     build: .
     platform: linux/amd64
+    command: go run cmd/walletcore/main.go 
+    container_name: goapp
     volumes:
       - .:/app
     ports:
       - 8080:8080
-  mysql:
+    depends_on:
+      - wallet-db
+
+  wallet-db:
     image: mysql:5.7
     platform: linux/amd64
+    container_name: wallet-db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: wallet
       MYSQL_PASSWORD: root
     ports:
       - 3306:3306
-    volumes:
-      - .docker/mysql:/var/lib/mysql
+    # volumes:
+    #   - .docker/mysql:/var/lib/mysql
+
+  balances-db:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: balances-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: balance
+      MYSQL_PASSWORD: root
+    ports:
+      - 3307:3307
+    # volumes:
+    #   - .docker/mysql:/var/lib/mysql
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:6.1.0"

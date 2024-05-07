@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com.br/elidelima/go-eda/database_config"
 	"github.com.br/elidelima/go-eda/internal/database"
 	"github.com.br/elidelima/go-eda/internal/event"
 	"github.com.br/elidelima/go-eda/internal/event/handler"
@@ -20,12 +21,28 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+func createAndSeedTables(db *sql.DB) {
+	err := database_config.CreateTables(db)
+	if err != nil {
+		panic(err)
+	}
+
+	// Seed initial data
+	if err := database_config.SeedData(db); err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Initialization and seeding completed successfully!")
+}
+
 func main() {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "root", "mysql", "3306", "wallet"))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "root", "wallet-db", "3306", "wallet"))
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
+
+	createAndSeedTables(db)
 
 	configMap := ckafka.ConfigMap{
 		"bootstrap.servers": "kafka:29092",
