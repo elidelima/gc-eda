@@ -1,3 +1,4 @@
+### - CREATE CLIENT
 POST http://localhost:8080/clients HTTP/1.1
 Content-Type: application/json
 
@@ -7,7 +8,6 @@ Content-Type: application/json
 }
 
 ### - CREATE ACCOUNT
-
 POST http://localhost:8080/accounts HTTP/1.1
 Content-Type: application/json
 
@@ -16,9 +16,7 @@ Content-Type: application/json
 }
 
 
-### TRANSACTIONS
-
-
+### - CREATE TRANSACTION
 POST http://localhost:8080/transactions HTTP/1.1
 Content-Type: application/json
 

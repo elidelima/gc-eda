@@ -1,22 +1,33 @@
 version: '3'
 
 services:
-  goapp:
-    build: .
+  walletapp:
+    build: ./wallet
     platform: linux/amd64
     command: go run cmd/walletcore/main.go 
-    container_name: goapp
+    container_name: walletapp
     volumes:
-      - .:/app
+      - ./wallet:/app
     ports:
       - 8080:8080
     depends_on:
-      - wallet-db
+      - walletdb
 
-  wallet-db:
+  balanceapp:
+    build: 
+      context: balance
+    container_name: balanceapp
+    entrypoint: wait-for balancedb:3307 -t 40 -- ./start.sh
+    volumes:
+      - ./balance:/home/node/app
+    tty: true
+    depends_on:
+      - balancedb
+
+  walletdb:
     image: mysql:5.7
     platform: linux/amd64
-    container_name: wallet-db
+    container_name: walletdb
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: wallet
@@ -26,16 +37,17 @@ services:
     # volumes:
     #   - .docker/mysql:/var/lib/mysql
 
-  balances-db:
+  balancedb:
     image: mysql:5.7
     platform: linux/amd64
-    container_name: balances-db
+    restart: always
+    tty: true
+    container_name: balancedb
     environment:
-      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: balance
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - 3307:3307
+      - 3307:3306
     # volumes:
     #   - .docker/mysql:/var/lib/mysql
 

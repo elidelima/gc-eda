@@ -36,7 +36,7 @@ func createAndSeedTables(db *sql.DB) {
 }
 
 func main() {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "root", "wallet-db", "3306", "wallet"))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "root", "walletdb", "3306", "wallet"))
 	if err != nil {
 		panic(err)
 	}

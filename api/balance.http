@@ -1,0 +1,11 @@
+### CHECK ALL BALANCES
+GET http://localhost:3003/balances
+Content-Type: application/json
+
+### CHECK BALANCE FOR ACCOUNT 2161e2cf-27ba-46f2-aab7-950c00dacabf
+GET http://localhost:3003/balances/2161e2cf-27ba-46f2-aab7-950c00dacabf HTTP/1.1
+Content-Type: application/json
+
+### CHECK BALANCE FOR ACCOUNT b06936c1-89d4-49dc-a480-c7381e25b582
+GET http://localhost:3003/balances/b06936c1-89d4-49dc-a480-c7381e25b582 HTTP/1.1
+Content-Type: application/json
