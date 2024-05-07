@@ -17,11 +17,14 @@ services:
     build: 
       context: balance
     container_name: balanceapp
-    entrypoint: wait-for balancedb:3307 -t 40 -- ./start.sh
+    entrypoint: wait-for balancedb:3306 -t 40 -- ./start.sh
     volumes:
       - ./balance:/home/node/app
     tty: true
+    ports:
+      - 3003:3003
     depends_on:
+      - kafka
       - balancedb
 
   walletdb:
@@ -41,7 +44,7 @@ services:
     image: mysql:5.7
     platform: linux/amd64
     restart: always
-    tty: true
+    # tty: true
     container_name: balancedb
     environment:
       MYSQL_DATABASE: balance
